@@ -1,6 +1,6 @@
 ﻿using GraveyardManager.Model;
-using GraveyardManager.Requesters.Graves;
-using GraveyardManager.Requesters.Persons;
+using GraveyardManager.Requests.Graves;
+using GraveyardManager.Requests.Persons;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

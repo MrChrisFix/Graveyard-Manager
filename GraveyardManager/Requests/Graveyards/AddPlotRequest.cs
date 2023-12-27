@@ -3,9 +3,9 @@ using GraveyardManager.Model;
 using GraveyardManager.Exceptions;
 using MediatR;
 
-namespace GraveyardManager.Requesters.Graveyards
+namespace GraveyardManager.Requests.Graveyards
 {
-    public record AddPlotRequest(int GYId, Plot Plot) : IRequest<Plot> { }
+    public record AddPlotRequest(int GyId, Plot Plot) : IRequest<Plot> { }
 
     public class AddPlotRequestHandler : IRequestHandler<AddPlotRequest, Plot>
     {
@@ -18,7 +18,9 @@ namespace GraveyardManager.Requesters.Graveyards
 
         public Task<Plot> Handle(AddPlotRequest request, CancellationToken cancellationToken)
         {
-            Graveyard graveyard = _context.Graveyards.Find(request.GYId, cancellationToken) ?? throw new NotFoundException("Graveyard not found");
+            Graveyard graveyard = _context.Graveyards.Find(request.GyId) ?? throw new NotFoundException("Graveyard not found");
+
+            _context.Plots.Add(request.Plot);
 
             graveyard.Plots.Add(request.Plot);
 

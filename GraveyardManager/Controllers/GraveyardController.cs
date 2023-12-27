@@ -1,5 +1,5 @@
 ﻿using GraveyardManager.Model;
-using GraveyardManager.Requesters.Graveyards;
+using GraveyardManager.Requests.Graveyards;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,19 +17,19 @@ namespace GraveyardManager.Controllers
         }
 
         [HttpGet]
-        [Route("/{Id}")]
-        public async Task<IActionResult> GetGraveyard(int Id)
+        [Route("/{id}")]
+        public async Task<IActionResult> GetGraveyard(int id)
         {
-            var result = await _mediator.Send(new GetGraveyardRequest(Id));
+            var result = await _mediator.Send(new GetGraveyardRequest(id));
 
             return Ok(result);
         }
 
         [HttpPost]
         [Route("/")]
-        public async Task<IActionResult> CreateGraveyard()
+        public async Task<IActionResult> CreateGraveyard(CreateGraveyardRequest request)
         {
-            var result = await _mediator.Send(new CreateGraveyardRequest());
+            var result = await _mediator.Send(request);
 
             return Created(Request.Path, result);
         }

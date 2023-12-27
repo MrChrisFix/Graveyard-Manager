@@ -4,7 +4,7 @@ using GraveyardManager.Model;
 using GraveyardManager.Utils;
 using MediatR;
 
-namespace GraveyardManager.Requesters.Graves
+namespace GraveyardManager.Requests.Graves
 {
     public record RemoveGraveRequest(int Id, DateOnly Removal) : IRequest<Unit> { }
 

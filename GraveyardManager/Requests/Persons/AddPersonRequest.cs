@@ -4,7 +4,7 @@ using GraveyardManager.Model;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace GraveyardManager.Requesters.Persons
+namespace GraveyardManager.Requests.Persons
 {
     public record AddPersonRequest(int GraveId, Person Person) : IRequest<Grave> { }
 

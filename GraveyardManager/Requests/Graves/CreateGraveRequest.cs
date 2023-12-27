@@ -3,7 +3,7 @@ using GraveyardManager.Exceptions;
 using MediatR;
 using GraveyardManager.Data;
 
-namespace GraveyardManager.Requesters.Graves
+namespace GraveyardManager.Requests.Graves
 {
     public record CreateGraveRequest(Grave NewGrave) : IRequest<Grave> { }
 

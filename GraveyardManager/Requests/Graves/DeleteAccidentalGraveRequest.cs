@@ -3,7 +3,7 @@ using GraveyardManager.Exceptions;
 using GraveyardManager.Model;
 using MediatR;
 
-namespace GraveyardManager.Requesters.Graves
+namespace GraveyardManager.Requests.Graves
 {
     public record DeleteAccidentalGraveRequest(int Id) : IRequest<Unit>  { }
 
