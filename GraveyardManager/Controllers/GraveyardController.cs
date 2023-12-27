@@ -16,8 +16,7 @@ namespace GraveyardManager.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
-        [Route("/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetGraveyard(int id)
         {
             var result = await _mediator.Send(new GetGraveyardRequest(id));
@@ -26,7 +25,6 @@ namespace GraveyardManager.Controllers
         }
 
         [HttpPost]
-        [Route("/")]
         public async Task<IActionResult> CreateGraveyard(CreateGraveyardRequest request)
         {
             var result = await _mediator.Send(request);
@@ -34,11 +32,10 @@ namespace GraveyardManager.Controllers
             return Created(Request.Path, result);
         }
 
-        [HttpPost]
-        [Route("/{GraveyardId}/plot")]
-        public async Task<IActionResult> AddPlot(int GraveyardId, Plot plot)
+        [HttpPost("{id}/plot")]
+        public async Task<IActionResult> AddPlot(int id, Plot plot)
         {
-            var result = await _mediator.Send(new AddPlotRequest(GraveyardId, plot));
+            var result = await _mediator.Send(new AddPlotRequest(id, plot));
             return Ok(result);
         }
     }

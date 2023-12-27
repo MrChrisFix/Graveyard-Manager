@@ -18,51 +18,49 @@ namespace GraveyardManager.Controllers
         }
 
 
-        [HttpGet("/Grave/{Id}")]
-        public async Task<IActionResult> GetGraveInfo(int Id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetGraveInfo(int id)
         {
-            var response = await _mediator.Send(new GetGraveRequest(Id));
+            var response = await _mediator.Send(new GetGraveRequest(id));
             return Ok(response);
         }
 
-        [HttpPost("/Grave")]
+        [HttpPost]
         public async Task<IActionResult> CreateNewGrave(Grave grave)
         {
             var result = await _mediator.Send(new CreateGraveRequest(grave));
             return Created(Request.Path, result);
         }
 
-        [HttpPatch]
-        [Route("/{GraveId}/modifyPerson")]
-        public async Task<IActionResult> ModifyPerson(int GraveId, PersonDTO personDTO)
+        [HttpPatch("{id}/modifyPerson")]
+        public async Task<IActionResult> ModifyPerson(int id, PersonDTO personDTO)
         {
-            var result = await _mediator.Send(new ModifyPersonRequest(GraveId, personDTO));
+            var result = await _mediator.Send(new ModifyPersonRequest(id, personDTO));
             return Ok(result);
         }
 
-        [HttpPut]
-        [Route("/{GraveId}/addPerson")]
-        public async Task<IActionResult> AddPersonToGrave(int GraveId, Person Person)
+        [HttpPut("{id}/addPerson")]
+        public async Task<IActionResult> AddPersonToGrave(int id, Person Person)
         {
-            var result = await _mediator.Send(new AddPersonRequest(GraveId, Person));
+            var result = await _mediator.Send(new AddPersonRequest(id, Person));
             return Ok(result);
         }
 
-        //Standard grave removal (eg. becouse it wasn't paid)
-        [HttpDelete("/Grave/{Id}")]
-        public async Task<IActionResult> RemoveGrave(int Id, DateOnly? removalDate)
+        //Standard grave removal (eg. because it wasn't paid)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> RemoveGrave(int id, DateOnly? removalDate)
         {
             DateOnly removal = removalDate ?? DateOnly.FromDateTime(DateTime.Now);
-            var response = await _mediator.Send(new RemoveGraveRequest(Id, removal));
+            var response = await _mediator.Send(new RemoveGraveRequest(id, removal));
 
             return Ok(response);
         }
 
         //Removal of accidentally added graves
-        [HttpDelete("/Grave/delete/{Id}")]
-        public async Task<IActionResult> DeleteAccidentalGrave(int Id)
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> DeleteAccidentalGrave(int id)
         {
-            var resposne = await _mediator.Send(new DeleteAccidentalGraveRequest(Id));
+            var resposne = await _mediator.Send(new DeleteAccidentalGraveRequest(id));
 
             return Ok(resposne);
         }
