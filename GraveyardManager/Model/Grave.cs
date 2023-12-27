@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GraveyardManager.Model
+﻿namespace GraveyardManager.Model
 {
     public class Grave
     {
@@ -8,6 +6,6 @@ namespace GraveyardManager.Model
         public required List<Person> Persons { get; set; }
         public DateOnly PaidUntil { get; set; }
         public DateOnly PlotAcquisition { get; set; }
-        public required int UsedPlotId { get; set; }
+        public required Plot Plot { get; set; }
     }
 }

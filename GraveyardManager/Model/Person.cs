@@ -14,6 +14,8 @@
         public DateTime? Funeral { get; set; }
         //public Parish? Parish { get; set; } //null when atheist;
 
+        public IInterment Burial { get; set; }
+
         public void Update(PersonDTO dto)
         {
             FirstName = dto.FirstName ?? FirstName;
@@ -29,7 +31,6 @@
 
     public record PersonDTO
     {
-        public int Id { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
 

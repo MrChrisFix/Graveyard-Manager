@@ -15,6 +15,8 @@
         public decimal Angle { get; set; }
         public string? GraveyardPart { get; set; }
 
+        public Graveyard Graveyard { get; set; } = null!;
+
         public enum PlotSize
         {
             SINGLE,

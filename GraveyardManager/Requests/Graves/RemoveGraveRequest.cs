@@ -1,7 +1,6 @@
 ﻿using GraveyardManager.Data;
 using GraveyardManager.Exceptions;
 using GraveyardManager.Model;
-using GraveyardManager.Utils;
 using MediatR;
 
 namespace GraveyardManager.Requests.Graves
@@ -18,7 +17,7 @@ namespace GraveyardManager.Requests.Graves
 
         public async Task<Unit> Handle(RemoveGraveRequest request, CancellationToken cancellationToken)
         {
-            Grave grave = await _context.Graves.FindAsync(request.Id) ?? throw new NotFoundException();
+            Grave grave = await _context.Graves.FindAsync(request.Id) ?? throw new NotFoundException($"The grave with the id {request.Id} was not found");
             RemovedGrave removedGrave = new(grave, request.Removal);
 
             await _context.RemovedGraves.AddAsync(removedGrave);

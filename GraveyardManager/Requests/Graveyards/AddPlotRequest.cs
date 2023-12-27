@@ -16,17 +16,17 @@ namespace GraveyardManager.Requests.Graveyards
             _context = context;
         }
 
-        public Task<Plot> Handle(AddPlotRequest request, CancellationToken cancellationToken)
+        public async Task<Plot> Handle(AddPlotRequest request, CancellationToken cancellationToken)
         {
             Graveyard graveyard = _context.Graveyards.Find(request.GyId) ?? throw new NotFoundException("Graveyard not found");
 
-            _context.Plots.Add(request.Plot);
+            await _context.Plots.AddAsync(request.Plot, cancellationToken);
 
             graveyard.Plots.Add(request.Plot);
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync(cancellationToken);
 
-            return Task.FromResult(request.Plot);
+            return request.Plot;
         }
     }
 }

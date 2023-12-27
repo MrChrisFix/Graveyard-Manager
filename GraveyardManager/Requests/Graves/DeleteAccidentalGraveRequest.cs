@@ -17,7 +17,7 @@ namespace GraveyardManager.Requests.Graves
 
         public async Task<Unit> Handle(DeleteAccidentalGraveRequest request, CancellationToken cancellationToken)
         {
-            Grave grave = await _context.Graves.FindAsync(request.Id) ?? throw new NotFoundException($"Grave with id {request.Id} not found");
+            Grave grave = await _context.Graves.FindAsync(request.Id) ?? throw new NotFoundException($"The grave with the id {request.Id} was not found");
             _context.Graves.Remove(grave);
 
             _context.SaveChanges();

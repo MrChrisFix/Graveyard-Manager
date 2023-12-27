@@ -21,7 +21,7 @@ namespace GraveyardManager.Requests.Graves
             Grave response = _context.Graves
                 .Include(x => x.Persons)
                 .ToList()
-                .Find(x => x.Id.Equals(request.Id)) ?? throw new NotFoundException();
+                .Find(x => x.Id.Equals(request.Id)) ?? throw new NotFoundException($"The grave with the id {request.Id} was not found");
 
             return Task.FromResult(response);
         }
