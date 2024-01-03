@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace GraveyardManager.Data
-{ //TODO: change name to GraveyardDbContext?
-    public class GraveDbContext : DbContext
+{
+    public class GraveyardDbContext : DbContext
     {
         public DbSet<Graveyard> Graveyards { get; set; }
+        public DbSet<Plot> Plots { get; set; }
         public DbSet<Grave> Graves { get; set; }
         public DbSet<RemovedGrave> RemovedGraves { get; set;}
-        public DbSet<Plot> Plots { get; set; }
+        public DbSet<Columbarium> Columbaria { get; set; }
+        public DbSet<Niche> Niches { get; set; }
 
-        public GraveDbContext(DbContextOptions<GraveDbContext> options) : base(options)
+        public GraveyardDbContext(DbContextOptions<GraveyardDbContext> options) : base(options)
         {
         }
     }

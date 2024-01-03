@@ -11,7 +11,7 @@ namespace GraveyardManager.Controllers
     public class GraveController : Controller
     {
         private readonly IMediator _mediator;
-        
+
         public GraveController(IMediator mediator)
         {
             _mediator = mediator;
@@ -46,7 +46,7 @@ namespace GraveyardManager.Controllers
             return Ok(result);
         }
 
-        //Standard grave removal (eg. because it wasn't paid)
+        //Standard grave removal (eg. because it wasn't paid) -> Soft delete
         [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveGrave(int id, DateOnly? removalDate)
         {
@@ -56,13 +56,20 @@ namespace GraveyardManager.Controllers
             return Ok(response);
         }
 
-        //Removal of accidentally added graves
-        [HttpDelete("delete/{id}")]
-        public async Task<IActionResult> DeleteAccidentalGrave(int id)
+        //Removal of accidentally added graves -> Hard delete
+        [HttpDelete("{id}/delete")]
+        public async Task<IActionResult> DeleteGrave(int id)
         {
             var resposne = await _mediator.Send(new DeleteAccidentalGraveRequest(id));
 
             return Ok(resposne);
+        }
+
+        [HttpPatch("{id}/pay")]
+        public async Task<IActionResult> PayForGrave(int id)
+        {
+            //TODO: grave payiment can have different time extensions, it needs to be handled
+            throw new NotImplementedException();
         }
     }
 }

@@ -9,8 +9,8 @@ namespace GraveyardManager.Requests.Graves
 
     public class DeleteAccidentalGraveRequestHandler : IRequestHandler<DeleteAccidentalGraveRequest, Unit>
     {
-        readonly GraveDbContext _context;
-        public DeleteAccidentalGraveRequestHandler(GraveDbContext context)
+        readonly GraveyardDbContext _context;
+        public DeleteAccidentalGraveRequestHandler(GraveyardDbContext context)
         {
             _context = context;
         }

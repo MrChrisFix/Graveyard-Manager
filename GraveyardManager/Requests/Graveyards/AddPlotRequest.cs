@@ -9,9 +9,9 @@ namespace GraveyardManager.Requests.Graveyards
 
     public class AddPlotRequestHandler : IRequestHandler<AddPlotRequest, Plot>
     {
-        GraveDbContext _context;
+        GraveyardDbContext _context;
 
-        public AddPlotRequestHandler(GraveDbContext context) 
+        public AddPlotRequestHandler(GraveyardDbContext context) 
         {
             _context = context;
         }

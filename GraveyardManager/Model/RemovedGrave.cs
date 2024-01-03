@@ -1,6 +1,4 @@
-﻿using GraveyardManager.Utils;
-
-namespace GraveyardManager.Model
+﻿namespace GraveyardManager.Model
 {
     public class RemovedGrave
     {
@@ -15,7 +13,7 @@ namespace GraveyardManager.Model
         public RemovedGrave(Grave grave, DateOnly removalDay)
         {
             Persons = grave.Persons;
-            UsedPlotId = grave.UsedPlotId;
+            UsedPlotId = grave.Plot.Id;
             PlotAcquisition = grave.PlotAcquisition;
             GraveRemoval = removalDay;
         }

@@ -10,8 +10,8 @@ namespace GraveyardManager.Requests.Graves
 
     public class GetGraveRequestHandler : IRequestHandler<GetGraveRequest, Grave>
     {
-        readonly GraveDbContext _context;
-        public GetGraveRequestHandler(GraveDbContext context)
+        readonly GraveyardDbContext _context;
+        public GetGraveRequestHandler(GraveyardDbContext context)
         {
             _context = context;
         }

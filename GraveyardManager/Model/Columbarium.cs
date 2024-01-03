@@ -1,13 +1,13 @@
 ﻿namespace GraveyardManager.Model
 {
-    public class Plot
+    public class Columbarium
     {
         public int Id { get; set; }
-        public Grave? Grave { get; set; }
 
-        public IEnumerable<RemovedGrave> RemovedGraves { get; set; } = Enumerable.Empty<RemovedGrave>();
+        public IEnumerable<Niche> Niches { get; set; }
 
-        public PlotSize Size { get; set; }
+        public int Height { get; set; }
+        public int Width { get; set; }
 
         // Positioning -> top left corner of plot
         // The coordintes are in meters
@@ -18,11 +18,5 @@
         public string? GraveyardPart { get; set; }
 
         public Graveyard Graveyard { get; set; } = null!;
-
-        public enum PlotSize
-        {
-            SINGLE,
-            FAMILY
-        }
     }
 }

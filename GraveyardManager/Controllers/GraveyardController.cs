@@ -38,5 +38,14 @@ namespace GraveyardManager.Controllers
             var result = await _mediator.Send(new AddPlotRequest(id, plot));
             return Ok(result);
         }
+
+        [HttpPost("{id}/columbarium")]
+        public async Task<IActionResult> AddColumbarium(int id, Columbarium columbarium)
+        {
+            var result = await _mediator.Send(new AddColumbariumRequest(id, columbarium));
+
+            return Created(Request.Path, result);
+        }
+
     }
 }

@@ -10,9 +10,9 @@ namespace GraveyardManager.Requests.Persons
 
     public class AddPersonRequestHandler : IRequestHandler<AddPersonRequest, Grave>
     {
-        GraveDbContext _context;
+        GraveyardDbContext _context;
 
-        public AddPersonRequestHandler(GraveDbContext context)
+        public AddPersonRequestHandler(GraveyardDbContext context)
         {
             _context = context;
         }

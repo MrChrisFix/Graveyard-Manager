@@ -16,7 +16,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
-builder.Services.AddDbContext<GraveDbContext>(
+builder.Services.AddDbContext<GraveyardDbContext>(
         //options => options.UseSqlite("name=ConnectionStrings:DefaultConnection"));
         options => options.UseInMemoryDatabase("name=ConnectionStrings:DefaultConnection"));
 
