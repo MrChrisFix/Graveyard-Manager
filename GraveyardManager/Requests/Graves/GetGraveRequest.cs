@@ -19,7 +19,7 @@ namespace GraveyardManager.Requests.Graves
         public Task<Grave> Handle(GetGraveRequest request, CancellationToken cancellationToken)
         {
             Grave response = _context.Graves
-                .Include(x => x.Persons)
+                .Include(x => x.People)
                 .ToList()
                 .Find(x => x.Id.Equals(request.Id)) ?? throw new NotFoundException($"The grave with the id {request.Id} was not found");
 

@@ -20,11 +20,11 @@ namespace GraveyardManager.Requests.Persons
         public Task<Grave> Handle(AddPersonRequest request, CancellationToken cancellationToken)
         {
             Grave grave = _context.Graves
-                .Include(x => x.Persons)
+                .Include(x => x.People)
                 .ToList()
                 .Find(x=> x.Id == request.GraveId) ?? throw new NotFoundException("Grave not found");
 
-            grave.Persons.Add(request.Person);
+            grave.People.Add(request.Person);
 
             _context.SaveChanges();
 

@@ -1,9 +1,9 @@
 ﻿namespace GraveyardManager.Model
 {
-    public class Grave
+    public class Grave : IInterment
     {
         public int Id { get; set; }
-        public required List<Person> Persons { get; set; }
+        public required IEnumerable<Person> People { get; set; }
         public DateOnly PaidUntil { get; set; }
         public DateOnly PlotAcquisition { get; set; }
         public required Plot Plot { get; set; }

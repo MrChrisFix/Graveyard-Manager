@@ -1,9 +1,9 @@
 ﻿namespace GraveyardManager.Model
 {
-    public class RemovedGrave
+    public class RemovedGrave : IInterment
     {
         public int Id { get; set; }
-        public List<Person> Persons { get; set; }
+        public IEnumerable<Person> People { get; set; }
         public int UsedPlotId { get; set; }
         public DateOnly PlotAcquisition { get; set; }
         public DateOnly GraveRemoval { get; set; }
@@ -12,7 +12,7 @@
 
         public RemovedGrave(Grave grave, DateOnly removalDay)
         {
-            Persons = grave.Persons;
+            People = grave.People;
             UsedPlotId = grave.Plot.Id;
             PlotAcquisition = grave.PlotAcquisition;
             GraveRemoval = removalDay;

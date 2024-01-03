@@ -21,7 +21,7 @@ namespace GraveyardManager.Requests.Graves
             RemovedGrave removedGrave = new(grave, request.Removal);
 
             await _context.RemovedGraves.AddAsync(removedGrave);
-            _context.Plots.Find(grave.UsedPlotId)!.Grave = null;
+            _context.Plots.Find(grave.Plot.Id)!.Grave = null;
 
             _context.Graves.Remove(grave);
 

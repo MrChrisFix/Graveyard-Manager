@@ -20,12 +20,14 @@ namespace GraveyardManager.Requests.Persons
         public Task<Grave> Handle(ModifyPersonRequest request, CancellationToken cancellationToken)
         {
             Grave grave = _context.Graves
-                .Include(x => x.Persons)
+                .Include(x => x.People)
                 .ToList()
                 .Find(x => x.Id == request.GraveId) ?? throw new NotFoundException("Grave not found");
 
-            Person person = grave.Persons.Where(x => x.Id == request.personDTO.Id).First() ?? throw new NotFoundException("Person not found in grave");
-            person.Update(request.personDTO);
+            //TODO: Modify person
+            
+            /*Person person = grave.People.Where(x => x.Id == request.personDTO.Id).First() ?? throw new NotFoundException("Person not found in grave");
+            person.Update(request.personDTO);*/
 
             _context.SaveChanges();
 
