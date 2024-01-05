@@ -1,4 +1,5 @@
 ﻿using GraveyardManager.Model;
+using GraveyardManager.Requests.Plots;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,8 @@ namespace GraveyardManager.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            throw new NotImplementedException();
+            var result = await _mediator.Send(new GetPlotRequest(id));
+            return Ok(result);
         }
 
         //The creation endpoint is in GraveyardController
@@ -25,22 +27,15 @@ namespace GraveyardManager.Controllers
         [HttpPatch("{id}")]
         public async Task<IActionResult> ModifyPlot(int id, Plot plot)
         {
-            //Idk what to modify, but an endpoint exists
-            throw new NotImplementedException();
+            throw new NotImplementedException("No purpose yet");
         }
 
         //Soft delete with cascading grave soft delete
         [HttpDelete("{id}")]
-        public async Task<IActionResult> RemovePlot(int id, int plotId)
+        public async Task<IActionResult> RemovePlot(int id, DateOnly removalDay)
         {
-            throw new NotImplementedException();
-        }
-
-        //Hard delete with cascading grave hard delete
-        [HttpDelete("{id}/delete")]
-        public async Task<IActionResult> DeletePlot(int id)
-        {
-            throw new NotImplementedException();
+            await _mediator.Send(new RemovePlotRequest(id, removalDay));
+            return NoContent();
         }
     }
 }

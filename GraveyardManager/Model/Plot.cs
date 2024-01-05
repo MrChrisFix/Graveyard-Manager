@@ -5,9 +5,12 @@
         public int Id { get; set; }
         public Grave? Grave { get; set; }
 
-        public IEnumerable<RemovedGrave> RemovedGraves { get; set; } = Enumerable.Empty<RemovedGrave>();
+        public IList<RemovedGrave> RemovedGraves { get; set; } = new List<RemovedGrave>();
 
         public PlotSize Size { get; set; }
+
+        public bool IsRemoved { get; set; } = false;
+        public Graveyard Graveyard { get; set; } = null!;
 
         // Positioning -> top left corner of plot
         // The coordintes are in meters
@@ -16,8 +19,6 @@
         public decimal Y { get; set; }
         public decimal Angle { get; set; }
         public string? GraveyardPart { get; set; }
-
-        public Graveyard Graveyard { get; set; } = null!;
 
         public enum PlotSize
         {
