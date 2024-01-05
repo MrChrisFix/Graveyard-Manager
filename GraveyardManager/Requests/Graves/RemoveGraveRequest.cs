@@ -5,9 +5,9 @@ using MediatR;
 
 namespace GraveyardManager.Requests.Graves
 {
-    public record RemoveGraveRequest(int Id, DateOnly Removal) : IRequest<Unit> { }
+    public record RemoveGraveRequest(int Id, DateOnly Removal) : IRequest { }
 
-    public class RemoveGraveRequestHandler : IRequestHandler<RemoveGraveRequest, Unit>
+    public class RemoveGraveRequestHandler : IRequestHandler<RemoveGraveRequest>
     {
         readonly GraveyardDbContext _context;
         public RemoveGraveRequestHandler(GraveyardDbContext context)
@@ -15,19 +15,23 @@ namespace GraveyardManager.Requests.Graves
             _context = context;
         }
 
-        public async Task<Unit> Handle(RemoveGraveRequest request, CancellationToken cancellationToken)
+        public async Task Handle(RemoveGraveRequest request, CancellationToken cancellationToken)
         {
-            Grave grave = await _context.Graves.FindAsync(request.Id) ?? throw new NotFoundException($"The grave with the id {request.Id} was not found");
+            Grave grave = await _context.Graves.FindAsync(request.Id, cancellationToken) 
+                ?? throw new NotFoundException($"The grave with the id {request.Id} was not found");
             RemovedGrave removedGrave = new(grave, request.Removal);
 
             await _context.RemovedGraves.AddAsync(removedGrave, cancellationToken);
-            _context.Plots.Find(grave.Plot.Id)!.Grave = null;
+            Plot plot = _context.Plots.Find(grave.PlotId)!;
+
+            plot.RemovedGraves.Add(removedGrave);
+            plot.Grave = null;
 
             _context.Graves.Remove(grave);
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync(cancellationToken);
 
-            return Unit.Value;
+            return;
         }
     }
 }

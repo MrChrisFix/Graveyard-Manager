@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GraveyardManager.Requests.Persons
 {
-    public record ModifyPersonRequest(int GraveId, PersonDTO personDTO) : IRequest<Grave> { }
+    public record ModifyPersonRequest(int GraveId, PersonDTO PersonDTO) : IRequest<Grave> { }
 
     public class ModifyPersonRequestHandler : IRequestHandler<ModifyPersonRequest, Grave>
     {
@@ -17,21 +17,21 @@ namespace GraveyardManager.Requests.Persons
             _context = context;
         }   
 
-        public Task<Grave> Handle(ModifyPersonRequest request, CancellationToken cancellationToken)
+        public async Task<Grave> Handle(ModifyPersonRequest request, CancellationToken cancellationToken)
         {
-            Grave grave = _context.Graves
+            Grave grave = await _context.Graves
                 .Include(x => x.People)
-                .ToList()
-                .Find(x => x.Id == request.GraveId) ?? throw new NotFoundException("Grave not found");
-
-            //TODO: Modify person
+                .FirstOrDefaultAsync(x => x.Id == request.GraveId, cancellationToken) 
+                ?? throw new NotFoundException("Grave not found");
             
-            /*Person person = grave.People.Where(x => x.Id == request.personDTO.Id).First() ?? throw new NotFoundException("Person not found in grave");
-            person.Update(request.personDTO);*/
+            Person person = grave.People.Where(x => x.Id == request.PersonDTO.Id).First() 
+                ?? throw new NotFoundException($"Person with id {request.PersonDTO.Id} was not found in grave");
 
-            _context.SaveChanges();
+            person.Update(request.PersonDTO);
 
-            return Task.FromResult(grave);
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return grave;
         }
     }
 }

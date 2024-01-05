@@ -16,14 +16,14 @@ namespace GraveyardManager.Requests.Graves
             _context = context;
         }
 
-        public Task<Grave> Handle(GetGraveRequest request, CancellationToken cancellationToken)
+        public async Task<Grave> Handle(GetGraveRequest request, CancellationToken cancellationToken)
         {
-            Grave response = _context.Graves
+            Grave response = await _context.Graves
                 .Include(x => x.People)
-                .ToList()
-                .Find(x => x.Id.Equals(request.Id)) ?? throw new NotFoundException($"The grave with the id {request.Id} was not found");
+                .FirstOrDefaultAsync(x => x.Id.Equals(request.Id), cancellationToken)
+                ?? throw new NotFoundException($"The grave with the id {request.Id} was not found");
 
-            return Task.FromResult(response);
+            return response;
         }
     }
 }

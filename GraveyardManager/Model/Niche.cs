@@ -3,9 +3,9 @@
     public class Niche : IInterment
     {
         public int Id { get; set; }
-        public IEnumerable<Person> People { get; set; }
+        public IList<Person> People { get; set; }
 
-        public IEnumerable<Person> RemovedPeople { get; set; }
+        public IList<Person> RemovedPeople { get; set; }
         public DateTime PaidUntil { get; set; }
         public DateTime PlaceAcquisition { get; set; }
 

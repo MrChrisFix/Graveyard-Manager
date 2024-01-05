@@ -17,18 +17,18 @@ namespace GraveyardManager.Requests.Persons
             _context = context;
         }
 
-        public Task<Grave> Handle(AddPersonRequest request, CancellationToken cancellationToken)
+        public async Task<Grave> Handle(AddPersonRequest request, CancellationToken cancellationToken)
         {
-            Grave grave = _context.Graves
+            Grave grave = await _context.Graves
                 .Include(x => x.People)
-                .ToList()
-                .Find(x=> x.Id == request.GraveId) ?? throw new NotFoundException("Grave not found");
+                .FirstOrDefaultAsync(x=> x.Id == request.GraveId, cancellationToken) 
+                ?? throw new NotFoundException($"Grave with the id {request.GraveId} was not found");
 
             grave.People.Add(request.Person);
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync(cancellationToken);
 
-            return Task.FromResult(grave);
+            return grave;
         }
     }
 }

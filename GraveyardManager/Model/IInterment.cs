@@ -2,6 +2,6 @@
 {
     public interface IInterment
     {
-        public IEnumerable<Person> People { get; set; }
+        public IList<Person> People { get; set; }
     }
 }

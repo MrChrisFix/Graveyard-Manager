@@ -5,7 +5,7 @@ using GraveyardManager.Data;
 
 namespace GraveyardManager.Requests.Graves
 {
-    public record CreateGraveRequest(Grave NewGrave) : IRequest<Grave> { }
+    public record CreateGraveRequest(Grave Grave) : IRequest<Grave> { }
 
     public class CreateGraveReqiestHandler : IRequestHandler<CreateGraveRequest, Grave>
     {
@@ -15,25 +15,22 @@ namespace GraveyardManager.Requests.Graves
             _context = context;
         }
 
-        public Task<Grave> Handle(CreateGraveRequest request, CancellationToken cancellationToken)
+        public async Task<Grave> Handle(CreateGraveRequest request, CancellationToken cancellationToken)
         {
-            /*Plot plot = _context.Plots.Find(request.NewGrave.UsedPlotId) ?? throw new Exception("Plot not found"); //TODO: other exception
+            Plot plot = await _context.Plots.FindAsync(request.Grave.PlotId, cancellationToken)
+                ?? throw new NotFoundException($"Plot with the id {request.Grave.PlotId} was not found");
 
             if(plot.Grave != null)
             {
-                throw new Exception("Plot is not free"); //TODO: a different exception
-            }*/
+                throw new BadRequestException("Plot is not empty");
+            }
 
-            _context.Graves.Add(request.NewGrave);
-            //plot.Grave = request.NewGrave;
+            await _context.Graves.AddAsync(request.Grave, cancellationToken);
+            plot.Grave = request.Grave;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync(cancellationToken);
 
-            //TODO: get the added Grave; Problem: where to get it's id? ===> Check with ram Db and postman
-
-            Grave addedGrave = _context.Graves.Find(request.NewGrave.Id)!;
-
-            return Task.FromResult(addedGrave);
+            return request.Grave;
         }
     }
 }

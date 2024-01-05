@@ -5,9 +5,9 @@ using MediatR;
 
 namespace GraveyardManager.Requests.Graves
 {
-    public record DeleteAccidentalGraveRequest(int Id) : IRequest<Unit>  { }
+    public record DeleteAccidentalGraveRequest(int Id) : IRequest { }
 
-    public class DeleteAccidentalGraveRequestHandler : IRequestHandler<DeleteAccidentalGraveRequest, Unit>
+    public class DeleteAccidentalGraveRequestHandler : IRequestHandler<DeleteAccidentalGraveRequest>
     {
         readonly GraveyardDbContext _context;
         public DeleteAccidentalGraveRequestHandler(GraveyardDbContext context)
@@ -15,13 +15,14 @@ namespace GraveyardManager.Requests.Graves
             _context = context;
         }
 
-        public async Task<Unit> Handle(DeleteAccidentalGraveRequest request, CancellationToken cancellationToken)
+        public async Task Handle(DeleteAccidentalGraveRequest request, CancellationToken cancellationToken)
         {
-            Grave grave = await _context.Graves.FindAsync(request.Id) ?? throw new NotFoundException($"The grave with the id {request.Id} was not found");
+            Grave grave = await _context.Graves.FindAsync(request.Id, cancellationToken)
+                ?? throw new NotFoundException($"The grave with the id {request.Id} was not found");
             _context.Graves.Remove(grave);
 
-            _context.SaveChanges();
-            return Unit.Value;
+            await _context.SaveChangesAsync(cancellationToken);
+            return;
         }
     }
 }

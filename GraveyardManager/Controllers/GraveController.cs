@@ -35,6 +35,7 @@ namespace GraveyardManager.Controllers
         [HttpPatch("{id}/modifyPerson")]
         public async Task<IActionResult> ModifyPerson(int id, PersonDTO personDTO)
         {
+            //TODO: move this endpoint to a PersonController
             var result = await _mediator.Send(new ModifyPersonRequest(id, personDTO));
             return Ok(result);
         }
@@ -51,25 +52,24 @@ namespace GraveyardManager.Controllers
         public async Task<IActionResult> RemoveGrave(int id, DateOnly? removalDate)
         {
             DateOnly removal = removalDate ?? DateOnly.FromDateTime(DateTime.Now);
-            var response = await _mediator.Send(new RemoveGraveRequest(id, removal));
+            await _mediator.Send(new RemoveGraveRequest(id, removal));
 
-            return Ok(response);
+            return NoContent();
         }
 
         //Removal of accidentally added graves -> Hard delete
         [HttpDelete("{id}/delete")]
         public async Task<IActionResult> DeleteGrave(int id)
         {
-            var resposne = await _mediator.Send(new DeleteAccidentalGraveRequest(id));
-
-            return Ok(resposne);
+            await _mediator.Send(new DeleteAccidentalGraveRequest(id));
+            return NoContent();
         }
 
         [HttpPatch("{id}/pay")]
-        public async Task<IActionResult> PayForGrave(int id)
+        public async Task<IActionResult> PayForGrave(int id, DateOnly paidUntil)
         {
-            //TODO: grave payiment can have different time extensions, it needs to be handled
-            throw new NotImplementedException();
+            var response = await _mediator.Send(new PayForGraveRequest(id, paidUntil));
+            return Ok(response);
         }
     }
 }
