@@ -12,7 +12,6 @@
 
         public DateOnly? Ordained { get; set; } //Only for priests and other clergy
         public DateTime? Funeral { get; set; }
-        //public Parish? Parish { get; set; } //null when atheist;
 
         public IInterment Burial { get; set; }
 
@@ -24,7 +23,6 @@
             Death = dto.Death ?? Death;
             Ordained = dto.Ordained ?? Ordained;
             Funeral = dto.Funeral ?? Funeral;
-            //TODO: Parish in future
         }
     }
 
@@ -40,7 +38,6 @@
 
         public DateOnly? Ordained { get; set; } //Only for priests and other clergy
         public DateTime? Funeral { get; set; }
-        //public Parish? Parish { get; set; } //null when atheist;
     }
 
 

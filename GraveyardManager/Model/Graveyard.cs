@@ -13,7 +13,7 @@ namespace GraveyardManager.Model
         public List<Plot> Plots { get; set; }
         public List<Columbarium> Columbaria { get; set; }
 
-        public GraveyardOwner Owner { get; set; } //City, parish, other?
+        public GraveyardOwner Owner { get; set; }
         public Address Address { get; set; }
 
         public Graveyard()

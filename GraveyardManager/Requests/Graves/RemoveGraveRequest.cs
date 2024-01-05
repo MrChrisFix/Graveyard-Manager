@@ -20,7 +20,7 @@ namespace GraveyardManager.Requests.Graves
             Grave grave = await _context.Graves.FindAsync(request.Id) ?? throw new NotFoundException($"The grave with the id {request.Id} was not found");
             RemovedGrave removedGrave = new(grave, request.Removal);
 
-            await _context.RemovedGraves.AddAsync(removedGrave);
+            await _context.RemovedGraves.AddAsync(removedGrave, cancellationToken);
             _context.Plots.Find(grave.Plot.Id)!.Grave = null;
 
             _context.Graves.Remove(grave);

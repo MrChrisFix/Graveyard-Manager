@@ -5,7 +5,7 @@ using MediatR;
 
 namespace GraveyardManager.Requests.Graveyards
 {
-    public record AddPlotRequest(int GyId, Plot Plot) : IRequest<Plot> { }
+    public record AddPlotRequest(int Id, Plot Plot) : IRequest<Plot> { }
 
     public class AddPlotRequestHandler : IRequestHandler<AddPlotRequest, Plot>
     {
@@ -18,7 +18,8 @@ namespace GraveyardManager.Requests.Graveyards
 
         public async Task<Plot> Handle(AddPlotRequest request, CancellationToken cancellationToken)
         {
-            Graveyard graveyard = _context.Graveyards.Find(request.GyId) ?? throw new NotFoundException("Graveyard not found");
+            Graveyard graveyard = await _context.Graveyards.FindAsync(request.Id, cancellationToken) 
+                ?? throw new NotFoundException($"Graveyard with the id {request.Id} was not found");
 
             await _context.Plots.AddAsync(request.Plot, cancellationToken);
 

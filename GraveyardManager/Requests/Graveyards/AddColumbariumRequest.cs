@@ -18,7 +18,8 @@ namespace GraveyardManager.Requests.Graveyards
 
         public async Task<Columbarium> Handle(AddColumbariumRequest request, CancellationToken cancellationToken)
         {
-            var graveyard = await _context.Graveyards.FindAsync(request.Id, cancellationToken) ?? throw new NotFoundException($"Graveyard with the id {request.Id} was not found");
+            var graveyard = await _context.Graveyards.FindAsync(request.Id, cancellationToken) 
+                ?? throw new NotFoundException($"Graveyard with the id {request.Id} was not found");
 
             //TODO: here or frontend must check if the choosen place is free
 

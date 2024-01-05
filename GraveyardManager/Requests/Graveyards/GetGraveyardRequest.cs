@@ -17,13 +17,13 @@ namespace GraveyardManager.Requests.Graveyards
             _context = context;
         }
 
-        public Task<Graveyard> Handle(GetGraveyardRequest request, CancellationToken cancellationToken)
+        public async Task<Graveyard> Handle(GetGraveyardRequest request, CancellationToken cancellationToken)
         {
-            Graveyard graveyard = _context.Graveyards
+            Graveyard graveyard = await _context.Graveyards
                 .Include(x => x.Plots)
-                .ToList()
-                .Find(x => x.Id == request.Id) ?? throw new NotFoundException("Graveyard not found");
-            return Task.FromResult(graveyard);
+                .Include(x => x.Columbaria).FirstOrDefaultAsync(x => x.Id == request.Id) 
+                ?? throw new NotFoundException($"Graveyard with the id {request.Id} was not found");
+            return graveyard;
         }
     }
 }
