@@ -8,6 +8,8 @@
         public DateOnly PlotAcquisition { get; set; }
         public DateOnly GraveRemoval { get; set; }
 
+        public RemovedGrave() { }
+
         public RemovedGrave(Grave grave, DateOnly removalDay)
         {
             People = grave.People;

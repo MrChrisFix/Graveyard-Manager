@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GraveyardManager.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class NicheController : Controller
     {
         readonly IMediator _mediator;

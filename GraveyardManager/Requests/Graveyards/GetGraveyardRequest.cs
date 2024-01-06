@@ -19,6 +19,8 @@ namespace GraveyardManager.Requests.Graveyards
 
         public async Task<Graveyard> Handle(GetGraveyardRequest request, CancellationToken cancellationToken)
         {
+            var g = _context.Graveyards.Find(request.Id);
+
             Graveyard graveyard = await _context.Graveyards
                 .Include(x => x.Plots)
                 .Include(x => x.Columbaria).FirstOrDefaultAsync(x => x.Id == request.Id) 

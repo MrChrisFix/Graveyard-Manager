@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GraveyardManager.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class PlotController : Controller
     {
         readonly IMediator _mediator;
@@ -15,7 +17,7 @@ namespace GraveyardManager.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetNiche(int id)
         {
             var result = await _mediator.Send(new GetPlotRequest(id));
             return Ok(result);

@@ -34,7 +34,7 @@ namespace GraveyardManager.Exceptions
         {
             var payload = new
             {
-                Message = "Unknown error",
+                exception.Message,
                 Exception = exception.ToString()
             };
 
