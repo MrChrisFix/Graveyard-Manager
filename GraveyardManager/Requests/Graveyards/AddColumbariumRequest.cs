@@ -27,6 +27,8 @@ namespace GraveyardManager.Requests.Graveyards
 
             graveyard.Columbaria.Add(request.Columbarium);
 
+            //TODO: crete niches here
+
             await _context.SaveChangesAsync(cancellationToken);
 
             return request.Columbarium;

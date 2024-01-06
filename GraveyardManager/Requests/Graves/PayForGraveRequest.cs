@@ -24,7 +24,6 @@ namespace GraveyardManager.Requests.Graves
             {
                 throw new BadRequestException("The new date cannot be earlier than the older");
             }
-
             grave.PaidUntil = request.PaidUntil;
 
             await _context.SaveChangesAsync(cancellationToken);

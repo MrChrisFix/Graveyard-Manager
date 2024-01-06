@@ -6,8 +6,8 @@
         public IList<Person> People { get; set; }
 
         public IList<Person> RemovedPeople { get; set; }
-        public DateTime PaidUntil { get; set; }
-        public DateTime PlaceAcquisition { get; set; }
+        public DateOnly PaidUntil { get; set; }
+        public DateOnly PlaceAcquisition { get; set; }
 
 
         public Niche()
