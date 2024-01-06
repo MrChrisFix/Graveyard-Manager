@@ -11,7 +11,8 @@ namespace GraveyardManager.Model
     {
         public int Id { get; set; }
         public List<Plot> Plots { get; set; }
-        public List<Columbarium> Columbaria { get; set; }
+        //TODO: in future
+        //public List<Columbarium> Columbaria { get; set; }
 
         public GraveyardOwner Owner { get; set; }
         public Address Address { get; set; }
@@ -21,13 +22,13 @@ namespace GraveyardManager.Model
             Owner = new() { Name = "", Address = new() };
             Address = new();
             Plots = new List<Plot>();
-            Columbaria = new List<Columbarium>();
+            //Columbaria = new List<Columbarium>();
         }
 
         public Graveyard(GraveyardOwner owner, Address address)
         {
             Plots = new List<Plot>();
-            Columbaria = new List<Columbarium>();
+            //Columbaria = new List<Columbarium>();
             Owner = owner;
             Address = address;
         }

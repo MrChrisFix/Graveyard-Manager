@@ -5,7 +5,7 @@ using MediatR;
 
 namespace GraveyardManager.Controllers
 {
-    public record PayForNicheRequest(int Id, DateOnly PaidUntil) : IRequest<Niche> { }
+    /*public record PayForNicheRequest(int Id, DateOnly PaidUntil) : IRequest<Niche> { }
 
     public class PayForNicheRequestHandler : IRequestHandler<PayForNicheRequest, Niche>
     {
@@ -31,5 +31,5 @@ namespace GraveyardManager.Controllers
 
             return niche;
         }
-    }
+    }*/
 }

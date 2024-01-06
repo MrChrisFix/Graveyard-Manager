@@ -5,7 +5,7 @@ using MediatR;
 
 namespace GraveyardManager.Requests.Niches
 {
-    public record ClearNicheRequest(int Id) : IRequest<Niche> { }
+    /*public record ClearNicheRequest(int Id) : IRequest<Niche> { }
 
     public class ClearNicheRequestHandler : IRequestHandler<ClearNicheRequest, Niche>
     {
@@ -28,5 +28,5 @@ namespace GraveyardManager.Requests.Niches
 
             return niche;
         }
-    }
+    }*/
 }

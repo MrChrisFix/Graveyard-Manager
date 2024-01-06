@@ -3,7 +3,7 @@ using GraveyardManager.Exceptions;
 using GraveyardManager.Model;
 using MediatR;
 
-namespace GraveyardManager.Requests.Graveyards
+/*namespace GraveyardManager.Requests.Graveyards
 {
     public record AddColumbariumRequest(int Id, Columbarium Columbarium) : IRequest<Columbarium> { }
 
@@ -32,4 +32,4 @@ namespace GraveyardManager.Requests.Graveyards
             return request.Columbarium;
         }
     }
-}
+}*/

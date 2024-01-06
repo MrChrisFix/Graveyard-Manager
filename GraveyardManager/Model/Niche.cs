@@ -1,6 +1,6 @@
 ﻿namespace GraveyardManager.Model
 {
-    public class Niche : IInterment
+    public class Niche
     {
         public int Id { get; set; }
         public IList<Person> People { get; set; }

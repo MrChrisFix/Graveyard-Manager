@@ -23,7 +23,8 @@ namespace GraveyardManager.Requests.Graveyards
 
             Graveyard graveyard = await _context.Graveyards
                 .Include(x => x.Plots)
-                .Include(x => x.Columbaria).FirstOrDefaultAsync(x => x.Id == request.Id) 
+                //.Include(x => x.Columbaria)
+                .FirstOrDefaultAsync(x => x.Id == request.Id) 
                 ?? throw new NotFoundException($"Graveyard with the id {request.Id} was not found");
             return graveyard;
         }

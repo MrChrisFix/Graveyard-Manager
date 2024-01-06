@@ -39,13 +39,13 @@ namespace GraveyardManager.Controllers
             return Ok(result);
         }
 
-        [HttpPost("{id}/columbarium")]
+        /*[HttpPost("{id}/columbarium")]
         public async Task<IActionResult> AddColumbarium(int id, Columbarium columbarium)
         {
             var result = await _mediator.Send(new AddColumbariumRequest(id, columbarium));
 
             return Created(Request.Path, result);
-        }
+        }*/
 
     }
 }

@@ -3,7 +3,7 @@ using GraveyardManager.Requests.Niches;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GraveyardManager.Controllers
+/*namespace GraveyardManager.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -46,4 +46,4 @@ namespace GraveyardManager.Controllers
             return Ok(response);
         }
     }
-}
+}*/
