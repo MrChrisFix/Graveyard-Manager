@@ -22,10 +22,12 @@ namespace GraveyardManager.Requests.Graveyards
             var g = _context.Graveyards.Find(request.Id);
 
             Graveyard graveyard = await _context.Graveyards
-                .Include(x => x.Plots)
+                .Include(x => x.Plots.Where(x => !x.IsRemoved))
+                .ThenInclude(x => x.Grave)
                 //.Include(x => x.Columbaria)
-                .FirstOrDefaultAsync(x => x.Id == request.Id) 
+                .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken)
                 ?? throw new NotFoundException($"Graveyard with the id {request.Id} was not found");
+
             return graveyard;
         }
     }

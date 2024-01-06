@@ -27,6 +27,7 @@ namespace GraveyardManager.Requests.Graves
             plot.RemovedGraves.Add(removedGrave);
             plot.Grave = null;
 
+            grave.People.Clear(); //Prevent cascade deleting of people
             _context.Graves.Remove(grave);
 
             await _context.SaveChangesAsync(cancellationToken);

@@ -32,13 +32,6 @@ namespace GraveyardManager.Controllers
             return Created(Request.Path, result);
         }
 
-        [HttpPost("{id}/plot")]
-        public async Task<IActionResult> AddPlot(int id, Plot plot)
-        {
-            var result = await _mediator.Send(new AddPlotRequest(id, plot));
-            return Ok(result);
-        }
-
         /*[HttpPost("{id}/columbarium")]
         public async Task<IActionResult> AddColumbarium(int id, Columbarium columbarium)
         {

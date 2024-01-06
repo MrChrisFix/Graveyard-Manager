@@ -26,9 +26,9 @@ namespace GraveyardManager.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateNewGrave(Grave grave)
+        public async Task<IActionResult> CreateNewGrave(CreateGraveRequest request)
         {
-            var result = await _mediator.Send(new CreateGraveRequest(grave));
+            var result = await _mediator.Send(request);
             return Created(Request.Path, result);
         }
 
@@ -40,11 +40,11 @@ namespace GraveyardManager.Controllers
             return Ok(result);
         }
 
-        [HttpPut("{id}/addPerson")]
-        public async Task<IActionResult> AddPersonToGrave(int id, Person Person)
+        [HttpPut("addPerson")]
+        public async Task<IActionResult> AddPersonToGrave(AddPersonRequest request)
         {
-            var result = await _mediator.Send(new AddPersonRequest(id, Person));
-            return Ok(result);
+            var response = await _mediator.Send(request);
+            return Ok(response);
         }
 
         //Standard grave removal (eg. because it wasn't paid) -> Soft delete

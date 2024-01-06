@@ -19,11 +19,16 @@ namespace GraveyardManager.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetNiche(int id)
         {
-            var result = await _mediator.Send(new GetPlotRequest(id));
-            return Ok(result);
+            var response = await _mediator.Send(new GetPlotRequest(id));
+            return Ok(response);
         }
 
-        //The creation endpoint is in GraveyardController
+        [HttpPost]
+        public async Task<IActionResult> AddPlot(AddPlotRequest request)
+        {
+            var response = await _mediator.Send(request);
+            return Ok(response);
+        }
 
 
         [HttpPatch("{id}")]

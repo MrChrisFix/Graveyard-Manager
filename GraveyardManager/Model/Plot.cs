@@ -1,4 +1,6 @@
-﻿namespace GraveyardManager.Model
+﻿using System.Text.Json.Serialization;
+
+namespace GraveyardManager.Model
 {
     public class Plot
     {
@@ -10,7 +12,7 @@
         public PlotSize Size { get; set; }
 
         public bool IsRemoved { get; set; } = false;
-        public Graveyard Graveyard { get; set; } = null!;
+        public int GraveyardId { get; set; }
 
         // Positioning -> top left corner of plot
         // The coordintes are in meters
