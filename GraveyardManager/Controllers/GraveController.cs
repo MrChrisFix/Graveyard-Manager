@@ -32,13 +32,6 @@ namespace GraveyardManager.Controllers
             return Created(Request.Path, result);
         }
 
-        [HttpPut("addPerson")]
-        public async Task<IActionResult> AddPersonToGrave(AddPersonRequest request)
-        {
-            var response = await _mediator.Send(request);
-            return Ok(response);
-        }
-
         //Standard grave removal (eg. because it wasn't paid) -> Soft delete
         [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveGrave(int id, DateOnly? removalDate)

@@ -1,6 +1,7 @@
 using GraveyardManager.Data;
 using GraveyardManager.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,13 +13,28 @@ builder.Services.AddControllers(options =>
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.MapType<DateOnly>(() => new OpenApiSchema { Type = "string", Format = "date"});
+});
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
 builder.Services.AddDbContext<GraveyardDbContext>(
         //options => options.UseSqlite("name=ConnectionStrings:DefaultConnection"));
         options => options.UseInMemoryDatabase("name=ConnectionStrings:DefaultConnection"));
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "CorsPolicy", 
+        policy => {
+        policy
+            .AllowAnyMethod()
+            .AllowCredentials()
+            .SetIsOriginAllowed((host) => true)
+            .AllowAnyHeader();
+        });
+});
 
 var app = builder.Build();
 
@@ -32,6 +48,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors("CorsPolicy");
 
 app.MapControllers();
 

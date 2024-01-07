@@ -26,22 +26,22 @@ namespace GraveyardManager.Requests.Persons
             
             if(!string.IsNullOrEmpty(request.FirstName))
             {
-                findings.Where(x => x.FirstName == request.FirstName);
+                findings = findings.Where(x => x.FirstName == request.FirstName);
             }
 
             if (!string.IsNullOrEmpty(request.LastName))
             {
-                findings.Where(x => x.LastName == request.LastName);
+                findings = findings.Where(x => x.LastName == request.LastName);
             }
 
             if (!(request.DateFrom == null || request.DateFrom == default))
             {
-                findings.Where(x => x.Birth >= request.DateFrom);
+                findings = findings.Where(x => x.Birth >= request.DateFrom);
             }
 
             if (!(request.DateTo == null || request.DateTo == default))
             {
-                findings.Where(x => x.Death <= request.DateTo);
+                findings = findings.Where(x => x.Death <= request.DateTo);
             }
 
             await findings.ToListAsync(cancellationToken);
