@@ -15,6 +15,8 @@
 
         public int GraveId { get; set; }
 
+        public int PlotId { get; set; }
+
         public void Update(PersonDTO dto)
         {
             FirstName = dto.FirstName ?? FirstName;

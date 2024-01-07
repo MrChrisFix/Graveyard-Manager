@@ -32,14 +32,6 @@ namespace GraveyardManager.Controllers
             return Created(Request.Path, result);
         }
 
-        [HttpPatch("{id}/modifyPerson")]
-        public async Task<IActionResult> ModifyPerson(int id, PersonDTO personDTO)
-        {
-            //TODO: move this endpoint to a PersonController
-            var result = await _mediator.Send(new ModifyPersonRequest(id, personDTO));
-            return Ok(result);
-        }
-
         [HttpPut("addPerson")]
         public async Task<IActionResult> AddPersonToGrave(AddPersonRequest request)
         {

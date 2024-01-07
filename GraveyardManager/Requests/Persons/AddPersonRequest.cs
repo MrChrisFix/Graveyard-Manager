@@ -45,6 +45,7 @@ namespace GraveyardManager.Requests.Persons
                 Ordained = request.Ordained,
                 Funeral = request.Funeral,
                 GraveId = request.GraveId,
+                PlotId = grave.PlotId
             };
 
             grave.People.Add(person);

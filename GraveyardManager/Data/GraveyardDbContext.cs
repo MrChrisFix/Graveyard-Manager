@@ -9,6 +9,7 @@ namespace GraveyardManager.Data
         public DbSet<Plot> Plots { get; set; }
         public DbSet<Grave> Graves { get; set; }
         public DbSet<RemovedGrave> RemovedGraves { get; set;}
+        public DbSet<Person> People { get; set; }
         //public DbSet<Columbarium> Columbaria { get; set; }
         //public DbSet<Niche> Niches { get; set; }
 

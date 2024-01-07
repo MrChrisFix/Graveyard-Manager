@@ -1,45 +1,90 @@
-﻿using GraveyardManager.Exceptions;
+﻿using GraveyardManager.Data;
+using GraveyardManager.Exceptions;
 using GraveyardManager.Model;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace GraveyardManager.Requests.Persons
 {
-    public class SearchPersonRequest : IRequest<IEnumerable<SearchResult>> 
-    {
-        public readonly string? FirstName;
-        public readonly string? LastName;
-        public readonly DateOnly? Birth;
-        public readonly DateOnly? Death;
+    public record SearchPersonRequest(string? FirstName, string? LastName, DateOnly? DateFrom, DateOnly? DateTo) : IRequest<IList<SearchResult>> { }
 
-        public SearchPersonRequest(
-            string firstName, string lastName,
-            DateOnly? birth, DateOnly? death            
-            ) 
+    public class SearchPersonRequestHandler : IRequestHandler<SearchPersonRequest, IList<SearchResult>>
+    {
+        GraveyardDbContext _context;
+
+        public SearchPersonRequestHandler(GraveyardDbContext context)
         {
-            if (string.IsNullOrEmpty(firstName) && string.IsNullOrEmpty(lastName))
+            _context = context;
+        }
+
+        public async Task<IList<SearchResult>> Handle(SearchPersonRequest request, CancellationToken cancellationToken)
+        {
+            if (string.IsNullOrEmpty(request.FirstName) && string.IsNullOrEmpty(request.LastName))
                 throw new BadRequestException("First name or last name must have value");
-            FirstName = firstName;
-            LastName = lastName;
-            Birth = birth;
-            Death = death;
+
+            var findings = _context.People.AsQueryable();
+            
+            if(!string.IsNullOrEmpty(request.FirstName))
+            {
+                findings.Where(x => x.FirstName == request.FirstName);
+            }
+
+            if (!string.IsNullOrEmpty(request.LastName))
+            {
+                findings.Where(x => x.LastName == request.LastName);
+            }
+
+            if (!(request.DateFrom == null || request.DateFrom == default))
+            {
+                findings.Where(x => x.Birth >= request.DateFrom);
+            }
+
+            if (!(request.DateTo == null || request.DateTo == default))
+            {
+                findings.Where(x => x.Death <= request.DateTo);
+            }
+
+            await findings.ToListAsync(cancellationToken);
+
+            var test = _context.People.ToList();
+
+            IList<SearchResult> results = new List<SearchResult>();
+
+            foreach(var find in findings)
+            {
+
+                Plot? plot = await _context.Plots
+                    .AsNoTracking()
+                    .Include(x=> x.Grave)
+                    .FirstOrDefaultAsync(x => x.Id == find.PlotId, cancellationToken);
+                if(plot == null)
+                    continue;
+                Graveyard? graveyard = await _context.Graveyards
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(x=> x.Id == plot.GraveyardId, cancellationToken);
+
+                if (graveyard == null)
+                    continue;
+
+                SearchResult res = new()
+                {
+                    Person = find,
+                    Plot = plot,
+                    Graveyard = graveyard,
+                    IsStillThere = false
+                };
+                results.Add(res);
+            }
+            
+            return results;
         }
     }
-
-    public class SearchPersonRequestHandler : IRequestHandler<SearchPersonRequest, IEnumerable<SearchResult>>
-    {
-
-        public Task<IEnumerable<SearchResult>> Handle(SearchPersonRequest request, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
 
     public class SearchResult
     {
-        public Graveyard Graveyard { get; set; }
-        //TOOO: Where on the graveyard
-        public Person Person { get; set; }
-
+        public required Graveyard Graveyard { get; set; }
+        public required Plot Plot { get; set; }
+        public required Person Person { get; set; }
+        public bool IsStillThere { get; set; }
     }
 }
