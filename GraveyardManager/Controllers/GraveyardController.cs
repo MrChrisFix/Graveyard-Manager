@@ -1,4 +1,5 @@
-﻿using GraveyardManager.Requests.Graveyards;
+﻿using GraveyardManager.Model;
+using GraveyardManager.Requests.Graveyards;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,6 +39,14 @@ namespace GraveyardManager.Controllers
 
             return Created(Request.Path, result);
         }*/
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> ChangeOwnerInformation(int id, GraveyardOwner owner)
+        {
+            var response = await _mediator.Send(new ChangeOwnerRequest(id, owner));
+
+            return Ok(response);
+        }
 
     }
 }

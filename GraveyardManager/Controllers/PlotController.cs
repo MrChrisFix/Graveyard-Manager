@@ -1,4 +1,5 @@
 ﻿using GraveyardManager.Model;
+using GraveyardManager.Model.DTO;
 using GraveyardManager.Requests.Plots;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -32,9 +33,10 @@ namespace GraveyardManager.Controllers
 
 
         [HttpPatch("{id}")]
-        public async Task<IActionResult> ModifyPlot(int id, Plot plot)
+        public async Task<IActionResult> ModifyPlot(int id, ChangePositionDTO dto)
         {
-            throw new NotImplementedException("No purpose yet");
+            var response = await _mediator.Send(new ChangePlotPositionRequest(id, dto));
+            return Ok(response);
         }
 
         //Soft delete with cascading grave soft delete
