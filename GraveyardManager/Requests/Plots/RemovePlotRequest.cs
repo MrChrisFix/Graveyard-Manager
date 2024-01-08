@@ -25,10 +25,10 @@ namespace GraveyardManager.Requests.Plots
                 .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken)
                 ?? throw new NotFoundException($"The plot with the id {request.Id} was not found");
 
-            Graveyard graveyard = await _context.Graveyards
+            /*Graveyard graveyard = await _context.Graveyards
                 .Include(x => x.Plots)
                 .FirstOrDefaultAsync(x => x.Id == plot.GraveyardId, cancellationToken)
-                ?? throw new Exception("Model error");
+                ?? throw new Exception("Model error");*/
 
             plot.IsRemoved = true;
 
@@ -40,7 +40,7 @@ namespace GraveyardManager.Requests.Plots
             { //Soft remove
                 
                 RemovedGrave removedGrave = new(plot.Grave, request.Removal);
-                await _context.RemovedGraves.AddAsync(removedGrave, cancellationToken);
+                _context.RemovedGraves.Add(removedGrave);
 
                 plot.RemovedGraves.Add(removedGrave);
                 _context.Graves.Remove(plot.Grave);

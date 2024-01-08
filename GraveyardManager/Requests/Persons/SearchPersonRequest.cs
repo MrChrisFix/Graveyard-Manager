@@ -50,28 +50,28 @@ namespace GraveyardManager.Requests.Persons
 
             IList<SearchResult> results = new List<SearchResult>();
 
-            foreach(var find in findings)
+            foreach(var person in findings)
             {
-
                 Plot? plot = await _context.Plots
                     .AsNoTracking()
                     .Include(x=> x.Grave)
-                    .FirstOrDefaultAsync(x => x.Id == find.PlotId, cancellationToken);
+                    .ThenInclude(x => x!.People)
+                    .FirstOrDefaultAsync(x => x.Id == person.PlotId, cancellationToken);
                 if(plot == null)
                     continue;
+
                 Graveyard? graveyard = await _context.Graveyards
                     .AsNoTracking()
                     .FirstOrDefaultAsync(x=> x.Id == plot.GraveyardId, cancellationToken);
-
                 if (graveyard == null)
                     continue;
 
                 SearchResult res = new()
                 {
-                    Person = find,
+                    Person = person,
                     Plot = plot,
                     Graveyard = graveyard,
-                    IsStillThere = false
+                    IsStillThere = plot.Grave != null && plot.Grave.People.Any(x => x.Id == person.Id)
                 };
                 results.Add(res);
             }

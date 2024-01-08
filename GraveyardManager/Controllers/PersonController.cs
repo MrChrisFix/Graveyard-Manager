@@ -7,7 +7,7 @@ namespace GraveyardManager.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class PersonController : Controller
+    public class PersonController : ControllerBase
     {
         readonly IMediator _mediator;
         public PersonController(IMediator mediator)
@@ -16,7 +16,7 @@ namespace GraveyardManager.Controllers
         }
 
 
-        [HttpPatch]
+        [HttpPut]
         public async Task<IActionResult> ModifyPerson(ModifyPersonRequest request)
         {
             var response = await _mediator.Send(request);
@@ -25,13 +25,10 @@ namespace GraveyardManager.Controllers
 
         [HttpGet("search")]
         public async Task<IActionResult> SearchPerson(
-            [FromQuery]string? firstName,
-            [FromQuery] string? lastName,
-            [FromQuery] DateOnly? dateFrom,
-            [FromQuery] DateOnly? dateTo
+            [FromQuery] SearchPersonRequest request
             )
         {
-            var response = await _mediator.Send(new SearchPersonRequest(firstName,lastName,dateFrom,dateTo));
+            var response = await _mediator.Send(request);
             return Ok(response);
         }
 

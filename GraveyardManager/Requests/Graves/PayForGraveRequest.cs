@@ -22,7 +22,7 @@ namespace GraveyardManager.Requests.Graves
 
             if(grave.PaidUntil > request.PaidUntil)
             {
-                throw new BadRequestException("The new date cannot be earlier than the older");
+                throw new BadRequestException("The new date cannot be earlier than the previuos date");
             }
             grave.PaidUntil = request.PaidUntil;
 

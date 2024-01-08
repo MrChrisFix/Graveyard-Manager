@@ -1,4 +1,6 @@
-﻿namespace GraveyardManager.Model
+﻿using GraveyardManager.Model.DTO;
+
+namespace GraveyardManager.Model
 {
     public class Person
     {
@@ -27,21 +29,4 @@
             Funeral = dto.Funeral ?? Funeral;
         }
     }
-
-
-    public record PersonDTO
-    {
-        public int Id { get; set; }
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-
-        public DateOnly? Birth { get; set; }
-
-        public DateOnly? Death { get; set; }
-
-        public DateOnly? Ordained { get; set; } //Only for priests and other clergy
-        public DateTime? Funeral { get; set; }
-    }
-
-
 }

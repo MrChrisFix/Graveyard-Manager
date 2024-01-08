@@ -3,7 +3,7 @@
     public class RemovedGrave
     {
         public int Id { get; set; }
-        public IList<Person> People { get; set; }
+        public IList<Person> People { get; set; } = new List<Person>();
         public int PlotId { get; set; }
         public DateOnly PlotAcquisition { get; set; }
         public DateOnly GraveRemoval { get; set; }

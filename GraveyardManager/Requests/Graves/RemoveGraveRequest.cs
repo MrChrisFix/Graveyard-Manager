@@ -2,6 +2,7 @@
 using GraveyardManager.Exceptions;
 using GraveyardManager.Model;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace GraveyardManager.Requests.Graves
 {
@@ -17,21 +18,28 @@ namespace GraveyardManager.Requests.Graves
 
         public async Task Handle(RemoveGraveRequest request, CancellationToken cancellationToken)
         {
-            Grave grave = await _context.Graves.FindAsync(request.Id, cancellationToken) 
+            Grave grave = await _context.Graves
+                .Include(x => x.People)
+                .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken)
                 ?? throw new NotFoundException($"The grave with the id {request.Id} was not found");
             RemovedGrave removedGrave = new(grave, request.Removal);
 
-            await _context.RemovedGraves.AddAsync(removedGrave, cancellationToken);
+            _context.RemovedGraves.Add(removedGrave);
             Plot plot = _context.Plots.Find(grave.PlotId)!;
 
             plot.RemovedGraves.Add(removedGrave);
             plot.Grave = null;
-            
-            foreach(var person in removedGrave.People)
-            grave.People.Clear(); //Prevent cascade deleting of people
+
+            foreach (var person in removedGrave.People)
+            {
+                person.GraveId = removedGrave.Id;
+            }
+            //grave.People.Clear(); //Prevent cascade deleting of people
             _context.Graves.Remove(grave);
 
             await _context.SaveChangesAsync(cancellationToken);
+
+            var test = _context.RemovedGraves.Find(removedGrave.Id);
 
             return;
         }

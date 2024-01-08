@@ -22,6 +22,7 @@ namespace GraveyardManager.Requests.Graveyards
             var g = _context.Graveyards.Find(request.Id);
 
             Graveyard graveyard = await _context.Graveyards
+                .AsNoTracking()
                 .Include(x => x.Plots.Where(x => !x.IsRemoved))
                 .ThenInclude(x => x.Grave)
                 //.Include(x => x.Columbaria)

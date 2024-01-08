@@ -20,7 +20,6 @@ namespace GraveyardManager.Requests.Graves
         {
             Plot plot = await _context.Plots
                 .Include(x=> x.Grave)
-                .ThenInclude(x => x!.People)
                 .FirstOrDefaultAsync(x => x.Id == request.PlotId, cancellationToken)
                 ?? throw new NotFoundException($"Plot with the id {request.PlotId} was not found");
 
@@ -29,19 +28,16 @@ namespace GraveyardManager.Requests.Graves
                 throw new BadRequestException("Plot is not empty");
             }
 
-            Grave grave = new()
+            plot.Grave = new()
             {
                 PaidUntil = request.PaidUntil,
                 PlotAcquisition = request.PlotAcquisition,
                 PlotId = request.PlotId
-            };
-
-            await _context.Graves.AddAsync(grave, cancellationToken);
-            plot.Grave = grave;
+            };            
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return grave;
+            return plot.Grave;
         }
     }
 }

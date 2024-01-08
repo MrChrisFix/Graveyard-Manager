@@ -16,5 +16,17 @@ namespace GraveyardManager.Data
         public GraveyardDbContext(DbContextOptions<GraveyardDbContext> options) : base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Grave>()
+                .HasMany(e => e.People)
+                .WithOne()
+                .HasForeignKey(e => e.GraveId)
+                .OnDelete(DeleteBehavior.ClientNoAction);
+
+        }
     }
 }

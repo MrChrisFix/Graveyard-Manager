@@ -48,7 +48,7 @@ namespace GraveyardManager.Requests.Plots
 
             Plot plot = request.CreatePlot();
 
-            await _context.Plots.AddAsync(plot, cancellationToken);
+            _context.Plots.Add(plot);
 
             graveyard.Plots.Add(plot);
 

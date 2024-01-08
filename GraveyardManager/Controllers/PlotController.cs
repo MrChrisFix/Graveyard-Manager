@@ -8,7 +8,7 @@ namespace GraveyardManager.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class PlotController : Controller
+    public class PlotController : ControllerBase
     {
         readonly IMediator _mediator;
 
@@ -32,7 +32,7 @@ namespace GraveyardManager.Controllers
         }
 
 
-        [HttpPatch("{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> ModifyPlot(int id, ChangePositionDTO dto)
         {
             var response = await _mediator.Send(new ChangePlotPositionRequest(id, dto));

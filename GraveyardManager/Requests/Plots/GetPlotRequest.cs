@@ -19,6 +19,7 @@ namespace GraveyardManager.Requests.Plots
         public async Task<Plot> Handle(GetPlotRequest request, CancellationToken cancellationToken)
         {
             var plot = await _context.Plots
+                .AsNoTracking()
                 .Include(x => x.Grave)
                 .ThenInclude(x => x!.People)
                 .Include(x => x.RemovedGraves)

@@ -8,7 +8,7 @@ namespace GraveyardManager.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class GraveController : Controller
+    public class GraveController : ControllerBase
     {
         private readonly IMediator _mediator;
 

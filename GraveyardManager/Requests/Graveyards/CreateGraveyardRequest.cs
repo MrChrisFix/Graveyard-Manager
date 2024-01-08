@@ -19,7 +19,7 @@ namespace GraveyardManager.Requests.Graveyards
         {
             Graveyard graveyard = new(request.Owner, request.Address);
             
-            await _context.Graveyards.AddAsync(graveyard, cancellationToken);
+            _context.Graveyards.Add(graveyard);
             await _context.SaveChangesAsync(cancellationToken);
 
             return graveyard;

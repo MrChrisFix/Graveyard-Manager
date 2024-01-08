@@ -19,6 +19,7 @@ namespace GraveyardManager.Requests.Graves
         public async Task<Grave> Handle(GetGraveRequest request, CancellationToken cancellationToken)
         {
             Grave response = await _context.Graves
+                .AsNoTracking()
                 .Include(x => x.People)
                 .FirstOrDefaultAsync(x => x.Id.Equals(request.Id), cancellationToken)
                 ?? throw new NotFoundException($"The grave with the id {request.Id} was not found");

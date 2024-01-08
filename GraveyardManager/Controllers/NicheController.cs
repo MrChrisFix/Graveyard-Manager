@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 {
     [ApiController]
     [Route("[controller]")]
-    public class NicheController : Controller
+    public class NicheController : ControllerBase
     {
         readonly IMediator _mediator;
 
@@ -25,7 +25,7 @@ using Microsoft.AspNetCore.Mvc;
 
         //Niche creation is at columbarium creation
 
-        [HttpPut("{id}/addPerson")]
+        [HttpPost("{id}/addPerson")]
         public async Task<IActionResult> AddPersonToNiche(int id, Person person)
         {
             var response = await _mediator.Send(new AddPersonRequest(id, person));
