@@ -25,7 +25,7 @@ namespace GraveyardManager.Data
                 .HasMany(e => e.People)
                 .WithOne()
                 .HasForeignKey(e => e.GraveId)
-                .OnDelete(DeleteBehavior.ClientNoAction);
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
         }
     }

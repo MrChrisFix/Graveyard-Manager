@@ -15,7 +15,7 @@ namespace GraveyardManager.Model
         public DateOnly? Ordained { get; set; } //Only for priests and other clergy
         public DateTime? Funeral { get; set; }
 
-        public int GraveId { get; set; }
+        public int? GraveId { get; set; }
 
         public int PlotId { get; set; }
 

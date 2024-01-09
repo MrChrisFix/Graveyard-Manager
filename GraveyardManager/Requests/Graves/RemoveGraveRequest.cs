@@ -25,21 +25,15 @@ namespace GraveyardManager.Requests.Graves
             RemovedGrave removedGrave = new(grave, request.Removal);
 
             _context.RemovedGraves.Add(removedGrave);
+
             Plot plot = _context.Plots.Find(grave.PlotId)!;
 
             plot.RemovedGraves.Add(removedGrave);
             plot.Grave = null;
 
-            foreach (var person in removedGrave.People)
-            {
-                person.GraveId = removedGrave.Id;
-            }
-            //grave.People.Clear(); //Prevent cascade deleting of people
             _context.Graves.Remove(grave);
 
             await _context.SaveChangesAsync(cancellationToken);
-
-            var test = _context.RemovedGraves.Find(removedGrave.Id);
 
             return;
         }
