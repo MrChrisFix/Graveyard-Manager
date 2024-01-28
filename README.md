@@ -2,7 +2,7 @@
 ### About
 It's an API server for a graveyard manager service, which allows to administer a cementery and search for graves on graveyards.
 
-### What do the API allow?
+### What does the API allow to do?
 - Create/modify a graveyard
 - Add/modify/remove plots for graves
 - Add/modify/remove graves from plots
